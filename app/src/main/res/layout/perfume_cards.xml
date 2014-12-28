@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:tag="cards main container"
+    >
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/perfume_card"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+
+        card_view:cardElevation="20dp"
+
+        >
+
+
+
+
+    <RelativeLayout
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:layout_width="match_parent"
+        android:layout_height="212dp"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:background="@color/White"
+
+        >
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/perfumeImage"
+            android:adjustViewBounds="true"
+            android:layout_alignParentTop="true"
+
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/note_text"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/perfumeImage"
+            android:layout_toEndOf="@+id/perfumeImage" />
+    </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
+
+
