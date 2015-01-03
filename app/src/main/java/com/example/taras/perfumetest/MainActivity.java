@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -35,6 +36,7 @@ public class MainActivity extends ActionBarActivity {
     private static ArrayList<BrandData> brands;
     static View.OnClickListener myOnClickListener;
     private static ArrayList<Integer> removedItems;
+
 
 
 

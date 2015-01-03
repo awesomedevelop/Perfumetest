@@ -6,4 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_perfume">Perfume</string>
     <color name="White">#FFFF</color>
+    <color name="for_text">#3F51B5</color>
+    <color name="tittle">#C5CAE9</color>
 </resources>

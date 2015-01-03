@@ -1,6 +1,7 @@
 package com.example.taras.perfumetest;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.taras.perfumetest.dbhelper.ExternalDbOpenHelper;
@@ -27,12 +29,14 @@ public class Perfume extends ActionBarActivity {
     private static final String TABLE_NAME = "perfume";
     private static final String BRAND_NAME = "name";
     private static final String BRAND_IMAGE ="image";
+    private static final String PERFUME_NOTES = "notes";
+    private static final String PERFUME_DESCRIPTION = "description";
     private SQLiteDatabase database;
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
     private static ArrayList<PerfumeData> perfumes;
-    String BrandName;
+    String condition;
 
 
 
@@ -44,43 +48,50 @@ public class Perfume extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      //  myOnClickListener = new MyOnClickListener(this);
+        myOnClickListener = new MyOnClickListener(this);
         recyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         Intent intent =  getIntent();
-        BrandName = intent.getStringExtra("brand");
+        condition = "brand = " +"'"+intent.getStringExtra("brand").trim()+"'";
+      //  condition = "brand = 'Adidas'";
         ExternalDbOpenHelper dbOpenHelper = new ExternalDbOpenHelper(this, DB_NAME);
         database = dbOpenHelper.openDataBase();
-        Toast.makeText(getApplication(),BrandName,Toast.LENGTH_SHORT).show();
+
+
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         new InsertDataTask().execute();
 
     }
 
     private void fillPerfumes (){
         perfumes = new ArrayList<PerfumeData>();
-
-        Cursor brandCursor = database.query(
+        Log.i("[TEST]","1");
+        Cursor perfumeCursor = database.query(
                 TABLE_NAME,
-                new String[] { BRAND_NAME,BRAND_IMAGE},
-                "brand" +"="+ "'"+BrandName+"'", null, null, null,
+                new String[] { BRAND_NAME,BRAND_IMAGE,PERFUME_NOTES,PERFUME_DESCRIPTION},
+                condition, null, null, null,
                 BRAND_NAME);
-        brandCursor.moveToFirst();
-        Log.i("Cursor",brandCursor.toString());
+        Log.i("[CONDITION]",condition);
+        perfumeCursor.moveToFirst();
+        Log.i("Cursor", perfumeCursor.toString());
 
 
-        if(!brandCursor.isAfterLast()){
+        if(!perfumeCursor.isAfterLast()){
             do {
-                String name = brandCursor.getString(0);
-                String img = "http://perfumeapp.16mb.com/rus/"+brandCursor.getString(1).trim();
+                String name = perfumeCursor.getString(0);
+                String img = "http://perfumeapp.16mb.com/rus/"+perfumeCursor.getString(1).trim();
+                String notes = perfumeCursor.getString(2);
+                String description = perfumeCursor.getString(3);
                 Log.i("[Image]",img);
-                perfumes.add(new PerfumeData(name, img));
+                Log.i("[NAME]",name);
+                perfumes.add(new PerfumeData(name, img, notes,description));
 
-            } while (brandCursor.moveToNext());
+            } while (perfumeCursor.moveToNext());
         }
-        brandCursor.close();
+        perfumeCursor.close();
     } // Конец заполнения бд
 
     private class InsertDataTask extends AsyncTask<Integer,Void,Void> {
@@ -108,8 +119,65 @@ public class Perfume extends ActionBarActivity {
             adapter = new PerfumeAdapter(Perfume.this,perfumes);
             recyclerView.setAdapter(adapter);
 
+
         }}
 // Конец асинхронки
+
+
+
+
+
+
+    private class MyOnClickListener implements View.OnClickListener {
+
+        private final Context context;
+
+        private MyOnClickListener(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void onClick(View v) {
+            nextactivity(v);
+
+        }
+
+        private void nextactivity(View v){
+            int selectedItemPosition = recyclerView.getChildPosition(v);
+            RecyclerView.ViewHolder viewHolder
+                    = recyclerView.findViewHolderForPosition(selectedItemPosition);
+            TextView textViewName
+                    = (TextView) viewHolder.itemView.findViewById(R.id.note_text);
+            String selectedName = (String) textViewName.getText();
+            Toast.makeText(context,selectedName,Toast.LENGTH_SHORT).show();
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

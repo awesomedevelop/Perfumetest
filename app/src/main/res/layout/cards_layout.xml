@@ -16,7 +16,7 @@
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
 
-        card_view:cardElevation="20dp"
+        card_view:cardElevation="3dp"
 
         >
 
