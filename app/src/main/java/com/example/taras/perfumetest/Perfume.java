@@ -15,8 +15,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.taras.perfumetest.dbhelper.ExternalDbOpenHelper;
 
@@ -25,11 +23,13 @@ import java.util.ArrayList;
 
 public class Perfume extends ActionBarActivity {
     static View.OnClickListener myOnClickListener;
+    static View.OnClickListener favoriteOnClickListener;
     private static final String DB_NAME = "perfume.sqlite3";
     private static final String TABLE_NAME = "perfume";
     private static final String BRAND_NAME = "name";
     private static final String BRAND_IMAGE ="image";
     private static final String PERFUME_NOTES = "notes";
+    private static final String PERFUME_FAVORITE = "favorite";
     private static final String PERFUME_DESCRIPTION = "description";
     private SQLiteDatabase database;
     private static RecyclerView.Adapter adapter;
@@ -44,11 +44,13 @@ public class Perfume extends ActionBarActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         myOnClickListener = new MyOnClickListener(this);
+
         recyclerView = (RecyclerView)findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -71,7 +73,7 @@ public class Perfume extends ActionBarActivity {
         Log.i("[TEST]","1");
         Cursor perfumeCursor = database.query(
                 TABLE_NAME,
-                new String[] { BRAND_NAME,BRAND_IMAGE,PERFUME_NOTES,PERFUME_DESCRIPTION},
+                new String[] { BRAND_NAME,BRAND_IMAGE,PERFUME_NOTES,PERFUME_DESCRIPTION,PERFUME_FAVORITE},
                 condition, null, null, null,
                 BRAND_NAME);
         Log.i("[CONDITION]",condition);
@@ -85,9 +87,10 @@ public class Perfume extends ActionBarActivity {
                 String img = "http://perfumeapp.16mb.com/rus/"+perfumeCursor.getString(1).trim();
                 String notes = perfumeCursor.getString(2);
                 String description = perfumeCursor.getString(3);
+                int favorite= perfumeCursor.getInt(4);
                 Log.i("[Image]",img);
                 Log.i("[NAME]",name);
-                perfumes.add(new PerfumeData(name, img, notes,description));
+                perfumes.add(new PerfumeData(name, img, notes,description,favorite));
 
             } while (perfumeCursor.moveToNext());
         }
@@ -128,6 +131,17 @@ public class Perfume extends ActionBarActivity {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     private class MyOnClickListener implements View.OnClickListener {
 
         private final Context context;
@@ -140,23 +154,28 @@ public class Perfume extends ActionBarActivity {
         public void onClick(View v) {
             nextactivity(v);
 
+
         }
 
         private void nextactivity(View v){
-            int selectedItemPosition = recyclerView.getChildPosition(v);
-            RecyclerView.ViewHolder viewHolder
-                    = recyclerView.findViewHolderForPosition(selectedItemPosition);
-            TextView textViewName
-                    = (TextView) viewHolder.itemView.findViewById(R.id.note_text);
-            String selectedName = (String) textViewName.getText();
-            Toast.makeText(context,selectedName,Toast.LENGTH_SHORT).show();
+
+
+
+
+
+          //  int selectedItemPosition = recyclerView.getChildPosition(v);
+//            RecyclerView.ViewHolder viewHolder
+//                    = recyclerView.findViewHolderForPosition(selectedItemPosition);
+//            TextView textViewName
+//                    = (TextView) viewHolder.itemView.findViewById(R.id.tittle_text);
+//            String selectedName = (String) textViewName.getText();
+//            Toast.makeText(context, selectedName, Toast.LENGTH_SHORT).show();
 
 
         }
 
 
     }
-
 
 
 

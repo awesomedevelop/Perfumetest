@@ -27,6 +27,8 @@
         android:textColor="@color/accent_material_dark"
         android:textStyle="bold|italic"
         android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -76,10 +78,11 @@
      <TextView
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         android:layout_marginLeft="5dp"
+         android:layout_marginLeft="10dp"
          android:layout_marginBottom="5dp"
          android:id="@+id/description_text"
-         android:layout_marginRight="5dp"
+         android:layout_marginRight="10dp"
+         android:layout_marginTop="10dp"
          android:textStyle="italic"
          android:textColor="@color/for_text"
          android:text=" Аgent Рrovocateur - невероятный аромат искушающего соблазна, наслаждения, провокации чувств. Аромат наполнен таинственностью, завораживает своей сексуальностью и очаровывает чувственностью. Создан для обольстительной, современной женщины, сводящей с ума мужчин своей взбудораживающей энергетикой. "
@@ -87,7 +90,25 @@
 
 
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@android:color/darker_gray"/>
 
+    <CheckBox
+        android:id="@+id/favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:button="@drawable/rectangle"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:tag="gf"
+        />
 
 
 
