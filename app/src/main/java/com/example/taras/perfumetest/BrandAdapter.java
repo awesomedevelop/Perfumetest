@@ -73,6 +73,10 @@ private ArrayList<BrandData> brandDataSet;
         textViewName.setText(brandDataSet.get(listPosition).getName());
         textViewEmail.setText(brandDataSet.get(listPosition).getEmail());
         imageView.setImageResource(brandDataSet.get(listPosition).getImage());
+
+
+
+
     }
 
     @Override

@@ -5,7 +5,12 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_perfume">Perfume</string>
+
     <color name="White">#FFFF</color>
-    <color name="for_text">#3F51B5</color>
-    <color name="tittle">#C5CAE9</color>
+    <color name="for_text">#004D40</color>
+    <color name="tittle">#004D40</color>
+
+    <string name="favorite_menu">Избранное</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
+
 </resources>

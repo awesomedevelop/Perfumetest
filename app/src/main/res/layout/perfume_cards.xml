@@ -58,7 +58,7 @@
             android:layout_marginLeft="5dp"
             android:textStyle="italic|bold"
             android:id="@+id/note_text"
-            android:textColor="@color/for_text"
+            android:textColor="@color/tittle"
             android:text="Ноты: Листья лимона, черный перец, полынь, черная древесина, кориандр, мускатный орех, пачули, мускус, дубовый мох "
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/perfumeImage"

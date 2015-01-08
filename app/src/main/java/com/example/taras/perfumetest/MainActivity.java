@@ -5,16 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,11 +71,77 @@ public class MainActivity extends ActionBarActivity {
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         new InsertDataTask().execute();
+        SearchView search_text = (SearchView) findViewById(R.id.search);
+        search_text.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                fillApdate(newText);
+                adapter = new BrandAdapter(brands);
+                recyclerView.setAdapter(adapter);
+                return true;
+            }
+        });
 
 
+
+
+        //EditText search_text = (EditText) findViewById(R.id.search);
+
+//        search_text.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            fillApdate(s);
+//                adapter = new BrandAdapter(brands);
+//                recyclerView.setAdapter(adapter);
+//               //adapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
 
     }
 
+
+   private void fillApdate(String filter){
+       brands = new ArrayList<BrandData>();
+
+       Cursor brandCursor = database.query(
+               TABLE_NAME,
+               new String[] { BRAND_NAME},
+               BRAND_NAME+ " LIKE "+"'"+filter+"%'",
+               null,
+                null,null,
+               BRAND_NAME);
+       brandCursor.moveToFirst();
+
+
+       if(!brandCursor.isAfterLast()){
+           do {
+               String name = brandCursor.getString(0);
+               brands.add(new BrandData(name,name,R.drawable.mexx,1));
+               Log.i("[APDATE NAME]",name);
+           } while (brandCursor.moveToNext());
+       }
+       if (brands==null){
+           Toast.makeText(getApplicationContext(),"Ничего не найдено",Toast.LENGTH_SHORT).show();
+       }
+
+       brandCursor.close();
+   }
 
 
     private void fillBrands (){
@@ -202,12 +269,21 @@ public class MainActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        switch (id){
+            case R.id.action_favorite:
+                Intent intent = new Intent(getApplicationContext(),FavoriteActivity.class);
+                MainActivity.this.startActivity(intent);
+                return true;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            case R.id.action_settings:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
         }
+        //noinspection SimplifiableIfStatement
 
-        return super.onOptionsItemSelected(item);
+
+
     }
 }
