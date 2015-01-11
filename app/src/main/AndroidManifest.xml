@@ -31,7 +31,9 @@
         </activity>
         <activity
             android:name=".Perfume"
-            android:label="@string/title_activity_perfume" >
+            android:label="@string/title_activity_perfume"
+            android:parentActivityName=".MainActivity"
+            >
         </activity>
         <activity
             android:name=".FavoriteActivity"

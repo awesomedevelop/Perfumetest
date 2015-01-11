@@ -49,6 +49,8 @@ public class Perfume extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfume);
+
+
         myOnClickListener = new MyOnClickListener(this);
 
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
@@ -58,6 +60,7 @@ public class Perfume extends ActionBarActivity {
         Intent intent =  getIntent();
         condition = "brand = " +"'"+intent.getStringExtra("brand").trim()+"'";
       //  condition = "brand = 'Adidas'";
+        setTitle(intent.getStringExtra("brand").trim());
         ExternalDbOpenHelper dbOpenHelper = new ExternalDbOpenHelper(this, DB_NAME);
         database = dbOpenHelper.openDataBase();
 
@@ -84,7 +87,7 @@ public class Perfume extends ActionBarActivity {
         if(!perfumeCursor.isAfterLast()){
             do {
                 String name = perfumeCursor.getString(0);
-                String img = "http://perfumeapp.16mb.com/rus/"+perfumeCursor.getString(1).trim();
+                String img = "http://perfumeapp.orgfree.com/"+perfumeCursor.getString(1).trim();
                 String notes = perfumeCursor.getString(2);
                 String description = perfumeCursor.getString(3);
                 int favorite= perfumeCursor.getInt(4);

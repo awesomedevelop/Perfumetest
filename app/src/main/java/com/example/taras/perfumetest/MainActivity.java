@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -29,7 +30,7 @@ public class MainActivity extends ActionBarActivity {
     private static final String DB_NAME = "perfume.sqlite3";
     private static final String TABLE_NAME = "brands";
     private static final String BRAND_NAME = "brand_name";
-    private static final String BRAND_ID ="_id";
+    private static final String BRAND_IMAGE ="images";
     private SQLiteDatabase database;
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -58,7 +59,7 @@ public class MainActivity extends ActionBarActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff00DDED));
 
 
         ExternalDbOpenHelper dbOpenHelper = new ExternalDbOpenHelper(this, DB_NAME);
@@ -81,7 +82,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 fillApdate(newText);
-                adapter = new BrandAdapter(brands);
+                adapter = new BrandAdapter(MainActivity.this,brands);
                 recyclerView.setAdapter(adapter);
                 return true;
             }
@@ -90,28 +91,7 @@ public class MainActivity extends ActionBarActivity {
 
 
 
-        //EditText search_text = (EditText) findViewById(R.id.search);
 
-//        search_text.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            fillApdate(s);
-//                adapter = new BrandAdapter(brands);
-//                recyclerView.setAdapter(adapter);
-//               //adapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
 
     }
 
@@ -121,7 +101,7 @@ public class MainActivity extends ActionBarActivity {
 
        Cursor brandCursor = database.query(
                TABLE_NAME,
-               new String[] { BRAND_NAME},
+               new String[] { BRAND_NAME,BRAND_IMAGE},
                BRAND_NAME+ " LIKE "+"'"+filter+"%'",
                null,
                 null,null,
@@ -131,8 +111,9 @@ public class MainActivity extends ActionBarActivity {
 
        if(!brandCursor.isAfterLast()){
            do {
+               String image = brandCursor.getString(1);
                String name = brandCursor.getString(0);
-               brands.add(new BrandData(name,name,R.drawable.mexx,1));
+               brands.add(new BrandData(name,image,1));
                Log.i("[APDATE NAME]",name);
            } while (brandCursor.moveToNext());
        }
@@ -149,7 +130,7 @@ public class MainActivity extends ActionBarActivity {
 
         Cursor brandCursor = database.query(
                 TABLE_NAME,
-                new String[] { BRAND_NAME},
+                new String[] { BRAND_NAME,BRAND_IMAGE},
                 null, null, null, null,
                 BRAND_NAME);
         brandCursor.moveToFirst();
@@ -157,8 +138,9 @@ public class MainActivity extends ActionBarActivity {
 
         if(!brandCursor.isAfterLast()){
             do {
+                String image = "http://perfumeapp.orgfree.com/logos/"+ brandCursor.getString(1).trim();
                 String name = brandCursor.getString(0);
-                brands.add(new BrandData(name,name,R.drawable.mexx,1));
+                brands.add(new BrandData(name,image,1));
 
             } while (brandCursor.moveToNext());
         }
@@ -192,7 +174,7 @@ public class MainActivity extends ActionBarActivity {
                // setUpList();
 
             }
-            adapter = new BrandAdapter(brands);
+            adapter = new BrandAdapter(MainActivity.this,brands);
             recyclerView.setAdapter(adapter);
 
         }}
