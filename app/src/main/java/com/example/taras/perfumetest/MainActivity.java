@@ -1,22 +1,20 @@
 package com.example.taras.perfumetest;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,11 +57,12 @@ public class MainActivity extends ActionBarActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff00DDED));
-
+        getSupportActionBar().setTitle("Каталог");
 
         ExternalDbOpenHelper dbOpenHelper = new ExternalDbOpenHelper(this, DB_NAME);
+     //  database= dbOpenHelper.getWritableDatabase();
         database = dbOpenHelper.openDataBase();
+
 
 
 
@@ -72,21 +71,8 @@ public class MainActivity extends ActionBarActivity {
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         new InsertDataTask().execute();
-        SearchView search_text = (SearchView) findViewById(R.id.search);
-        search_text.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                fillApdate(newText);
-                adapter = new BrandAdapter(MainActivity.this,brands);
-                recyclerView.setAdapter(adapter);
-                return true;
-            }
-        });
+
 
 
 
@@ -111,10 +97,9 @@ public class MainActivity extends ActionBarActivity {
 
        if(!brandCursor.isAfterLast()){
            do {
-               String image = brandCursor.getString(1);
+               String image = "http://perfumeapp.orgfree.com/logos/"+ brandCursor.getString(1).trim();
                String name = brandCursor.getString(0);
-               brands.add(new BrandData(name,image,1));
-               Log.i("[APDATE NAME]",name);
+               brands.add(new BrandData(name, image, 1));
            } while (brandCursor.moveToNext());
        }
        if (brands==null){
@@ -238,6 +223,29 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+        android.support.v7.widget.SearchView searchView =
+                (android.support.v7.widget.SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                fillApdate(s);
+                adapter = new BrandAdapter(MainActivity.this,brands);
+                recyclerView.setAdapter(adapter);
+                return true;
+            }
+        });
+
+
         return true;
     }
 
@@ -257,6 +265,10 @@ public class MainActivity extends ActionBarActivity {
                 MainActivity.this.startActivity(intent);
                 return true;
 
+
+
+
+
             case R.id.action_settings:
                 return true;
             default:
@@ -268,4 +280,6 @@ public class MainActivity extends ActionBarActivity {
 
 
     }
+
+
 }

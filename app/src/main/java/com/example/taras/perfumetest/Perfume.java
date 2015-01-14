@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.taras.perfumetest.dbhelper.ExternalDbOpenHelper;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 
@@ -50,7 +52,12 @@ public class Perfume extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfume);
 
-
+        AdView adView = (AdView)this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("TEST_DEVICE_ID")
+                .build();
+        adView.loadAd(adRequest);
         myOnClickListener = new MyOnClickListener(this);
 
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
@@ -213,6 +220,7 @@ public class Perfume extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_perfume, menu);
+
         return true;
     }
     @Override
@@ -222,11 +230,16 @@ public class Perfume extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+       switch (id){
 
-        return super.onOptionsItemSelected(item);
+           case R.id.action_settings:
+               return true;
+           default: return super.onOptionsItemSelected(item);
+
+
+
+       }
+
+
     }
 }

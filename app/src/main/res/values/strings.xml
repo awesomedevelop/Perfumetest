@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Perfumetest</string>
+    <string name="app_name">Каталог духов</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_perfume">Perfume</string>
-
+    <string name="admob_publisher_id">a15124c71442cab</string>
     <color name="White">#FFFF</color>
     <color name="for_text">#004D40</color>
     <color name="tittle">#004D40</color>
