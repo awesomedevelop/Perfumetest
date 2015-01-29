@@ -47,22 +47,31 @@
         android:layout_height="wrap_content">
         <ImageView
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
 
             android:id="@+id/perfumeImage" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
             android:textStyle="italic|bold"
             android:id="@+id/note_text"
             android:textColor="@color/tittle"
             android:text="Ноты: Листья лимона, черный перец, полынь, черная древесина, кориандр, мускатный орех, пачули, мускус, дубовый мох "
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/brand_for_perfume"
             android:layout_toRightOf="@+id/perfumeImage"
             android:layout_toEndOf="@+id/perfumeImage" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic|bold"
+            android:text="brand"
+            android:id="@+id/brand_for_perfume"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/note_text"
+            android:layout_alignStart="@+id/note_text" />
 
 
     </RelativeLayout>

@@ -43,8 +43,9 @@
             <ImageView
                 android:id="@+id/imageView"
                 android:tag="image_tag"
-                android:layout_width="300px"
-                android:layout_height="200px"
+
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
 
@@ -74,14 +75,7 @@
 
 
             </LinearLayout>
-            <ImageView
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:id="@+id/imageView2"
-                android:background="@drawable/arrow"
-                 />
+
 
             </LinearLayout>
         </LinearLayout>

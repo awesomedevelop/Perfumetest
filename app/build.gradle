@@ -5,11 +5,11 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.example.taras.perfumetest"
+        applicationId "ua.AwesomeDevelop.perfume"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
+        versionCode 14
+        versionName "2.1"
     }
     buildTypes {
         release {
